@@ -1,0 +1,27 @@
+{
+  "name": "t1hapi",
+  "version": "0.0.0",
+  "description": "first hapi tutorial",
+  "main": "server/bin/start.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hapi",
+    "hapi",
+    "tutorial",
+    "rest",
+    "hapi"
+  ],
+  "author": "Makarand BKar",
+  "license": "ISC",
+  "dependencies": {
+    "hapi": "^6.7.1",
+    "wreck": "^4.0.0",
+    "hapi-swagger": "^0.2.4",
+    "joi": "^4.6.2",
+    "mongoose": "^3.8.15",
+    "good": "^2.2.3",
+    "winston": "^0.7.3"
+  }
+}
