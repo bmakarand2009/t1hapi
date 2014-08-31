@@ -1,11 +1,10 @@
 'use strict';
-var Path = require('path'),
-    hapi = require('hapi'),
-    swagger         = require('hapi-swagger'),
-    wreck = require('wreck'),
-    pack    = require('../../package'),
-    joi = require('joi'),
-    logger=require('../utils/logger');
+//var Path    = require('path'),
+var    hapi       = require('hapi'),
+    swagger = require('hapi-swagger'),
+    pack       = require('../../package'),
+    logger    = require('../utils/logger'),
+    routes          = require('../lib/routes.js');
 
 
 var serverOptions = {
@@ -14,52 +13,7 @@ var serverOptions = {
 };
 
 var server = hapi.createServer('localhost', 3000, serverOptions);
-
-var internals = {}
-internals.serveWeather = function (request, reply) {
-    wreck.get('http://weather.yahooapis.com/forecastrss?w=2502265', function (err, res, payload) {
-            reply(err || payload); //return type is text/html but use JSON.parse() if you now the type is application/JSON
-        });
-};
-server.route({
-    method : 'GET',
-    path : '/api/weather/{id}' ,
-    config:{
-        handler: internals.serveWeather,
-        notes: 'Returns the weather as per the areacode',
-        tags: ['api']
-    }
-})
-
-server.route({
-    method : 'GET',
-    path: '/api/people/{id}',
-    config:{
-        handler : function(req,reply){
-            reply('hello ' + req.params.id);
-        },
-        notes: 'Returns person with give id',
-        tags: ['api'],
-        validate: {
-            params: {
-                id: joi.number()
-                        .required()
-                        .description('the id for the person'),
-            }
-        }
-    }
-})
-
-server.route({
-    method:'GET',
-    path:'/public/{param*}',
-    handler:{
-        directory:{
-            path: 'client',
-            listing:false
-        }
-    }
-});
+server.route(routes.routes);
 
 // setup swagger options
 var swaggerOptions = {
